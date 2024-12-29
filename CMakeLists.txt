@@ -6,7 +6,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 project(stduuid CXX)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(UUID_BUILD_TESTS "Build the unit tests" ${UUID_MAIN_PROJECT})
 option(UUID_SYSTEM_GENERATOR "Enable operating system uuid generator" OFF)
@@ -48,6 +48,8 @@ if (NOT UUID_USING_CXX20_SPAN)
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
             $<INSTALL_INTERFACE:include>)
     install(DIRECTORY gsl DESTINATION include)
+else()
+    target_compile_definitions(${PROJECT_NAME} INTERFACE UUID_USING_CXX20_SPAN)
 endif ()
 
 if(UUID_ENABLE_INSTALL)
